@@ -5,13 +5,14 @@ class Searchbar extends Component {
     inputValue: '',
   };
 
-  onHandleInput = ({ target: { value } }) => {
+  handleInput = ({ target: { value } }) => {
     this.setState({ inputValue: value });
   };
 
   onHandleSubmit = e => {
     e.preventDefault();
     this.props.onSubmit(this.state.inputValue);
+    this.setState({ inputValue: '' });
   };
 
   render() {
@@ -26,7 +27,7 @@ class Searchbar extends Component {
           <input
             className="SearchForm-input"
             value={inputValue}
-            onChange={this.onHandleInput}
+            onChange={this.handleInput}
             type="text"
             autoComplete="off"
             autoFocus
