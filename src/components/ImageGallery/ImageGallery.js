@@ -2,7 +2,6 @@ import React from 'react';
 import ImageGalleryItem from './ImageGalleryItem';
 
 function ImageGallery({ images, onOpen }) {
-  console.log(images);
   return (
     <ul className="ImageGallery">
       {images.map(({ id, webformatURL, largeImageURL, tags }) => (

@@ -6,7 +6,6 @@ export default function ImageGalleryItem({
   tags,
   onOpen,
 }) {
-  console.log(tags);
   return (
     <li className="ImageGalleryItem">
       <img

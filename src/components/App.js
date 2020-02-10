@@ -3,6 +3,7 @@ import Searchbar from './Searchbar';
 import ImageGallery from './ImageGallery';
 import Button from './Button';
 import Modal from './Modal';
+import Loader from './Loader';
 import getImagesByQuery from '../utils/imagesApi';
 
 export default class App extends Component {
@@ -13,6 +14,7 @@ export default class App extends Component {
     searchQuery: '',
     page: 1,
     imgUrl: '',
+    errorMessage: '',
   };
 
   componentDidUpdate(prevProps, prevState) {
@@ -22,6 +24,13 @@ export default class App extends Component {
     if (oldQuery !== newQuery) {
       this.loadNewContent();
     }
+
+    if (!this.state.loading) {
+      window.scrollTo({
+        top: document.documentElement.scrollHeight,
+        behavior: 'smooth',
+      });
+    }
   }
 
   handleSubmit = value => {
@@ -30,15 +39,21 @@ export default class App extends Component {
 
   loadNewContent = () => {
     const { searchQuery, page } = this.state;
-    console.log(searchQuery);
-    console.log(page);
+    this.setState({ loading: true });
 
-    getImagesByQuery(searchQuery, page).then(({ data: { hits } }) =>
-      this.setState(state => ({
-        images: [...state.images, ...hits],
-        page: state.page + 1,
-      })),
-    );
+    getImagesByQuery(searchQuery, page)
+      .then(({ data: { hits } }) =>
+        this.setState(state => ({
+          images: [...state.images, ...hits],
+          page: state.page + 1,
+        })),
+      )
+      .catch(error => {
+        this.setState({ errorMessage: error });
+      })
+      .finally(() => {
+        this.setState({ loading: false });
+      });
   };
 
   openLargeImage = largeImgUrl => {
@@ -54,7 +69,7 @@ export default class App extends Component {
     const { images, loading, openModal, imgUrl } = this.state;
     return (
       <>
-        <Searchbar onSubmit={this.handleSubmit} />;
+        <Searchbar onSubmit={this.handleSubmit} />;{loading ? <Loader /> : null}
         {images.length > 0 && (
           <>
             <ImageGallery images={images} onOpen={this.openLargeImage} />
