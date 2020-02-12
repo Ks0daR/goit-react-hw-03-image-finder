@@ -1,5 +1,6 @@
 import React from 'react';
 import ImageGalleryItem from './ImageGalleryItem';
+import PropTypes from 'prop-types';
 
 function ImageGallery({ images, onOpen }) {
   return (
@@ -16,5 +17,10 @@ function ImageGallery({ images, onOpen }) {
     </ul>
   );
 }
+
+ImageGallery.propTypes = {
+  images: PropTypes.arrayOf(PropTypes.object.isRequired),
+  onOpen: PropTypes.func.isRequired,
+};
 
 export default ImageGallery;

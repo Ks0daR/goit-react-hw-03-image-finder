@@ -66,17 +66,19 @@ export default class App extends Component {
   };
 
   render() {
-    const { images, loading, openModal, imgUrl } = this.state;
+    const { images, loading, openModal, imgUrl, errorMessage } = this.state;
     return (
       <>
-        <Searchbar onSubmit={this.handleSubmit} />;{loading ? <Loader /> : null}
+        <Searchbar onSubmit={this.handleSubmit} />
+        {loading && <Loader />}
+        {errorMessage && (
+          <h3 className="Error">Извините что то пошло не так!</h3>
+        )}
         {images.length > 0 && (
           <>
             <ImageGallery images={images} onOpen={this.openLargeImage} />
             <Button onLoad={this.loadNewContent} />
-            {openModal ? (
-              <Modal onClose={this.toggleModal} imgUrl={imgUrl} />
-            ) : null}
+            {openModal && <Modal onClose={this.toggleModal} imgUrl={imgUrl} />}
           </>
         )}
       </>

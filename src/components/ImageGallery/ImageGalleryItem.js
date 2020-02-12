@@ -1,11 +1,7 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
-export default function ImageGalleryItem({
-  webformatURL,
-  largeImageURL,
-  tags,
-  onOpen,
-}) {
+function ImageGalleryItem({ webformatURL, largeImageURL, tags, onOpen }) {
   return (
     <li className="ImageGalleryItem">
       <img
@@ -17,3 +13,12 @@ export default function ImageGalleryItem({
     </li>
   );
 }
+
+ImageGalleryItem.propTypes = {
+  webformatURL: PropTypes.string.isRequired,
+  largeImageURL: PropTypes.string.isRequired,
+  tags: PropTypes.PropTypes.string.isRequired,
+  onOpen: PropTypes.func.isRequired,
+};
+
+export default ImageGalleryItem;

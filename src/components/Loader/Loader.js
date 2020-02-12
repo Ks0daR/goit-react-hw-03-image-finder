@@ -6,7 +6,7 @@ export default class App extends Component {
     return (
       <Loader
         className="Loader"
-        type="Audip"
+        type="Audio"
         color="#00BFFF"
         height={80}
         width={80}
